@@ -22,8 +22,8 @@
 (def cell-map 
   (apply 
     hash-map 
-      (concat (list nil col-ids \0 col-ids) 
-              (apply concat (map #(list % (list %)) col-ids) )
+      (concat (list nil (set col-ids) \0 (set col-ids)) 
+              (apply concat (map #(list % (set (list %))) col-ids) )
       ) 
   ) 
 ) 
