@@ -1,8 +1,11 @@
 (ns clojoku.data (:gen-class))
 
-(def unit-size 9)
+;(def rows-in-quadrant 2)
+;(def cols-in-quadrant 3)
 (def rows-in-quadrant 3)
 (def cols-in-quadrant 3)
+
+(def unit-size (* rows-in-quadrant cols-in-quadrant))
 
 
 (defn member [x l] (some #(= x %) l))
