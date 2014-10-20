@@ -13,7 +13,7 @@
   )  
 )
 
-(def col-ids (generate-sequence \1))
+(def col-ids (range 1 (+ unit-size 1)))
 (def row-ids (generate-sequence \a))
 
 (def row-partitions (partition rows-in-quadrant row-ids))
@@ -22,8 +22,8 @@
 (def cell-map 
   (apply 
     hash-map 
-      (concat (list nil (set col-ids) \0 (set col-ids)) 
-              (apply concat (map #(list % (set (list %))) col-ids) )
+      (concat (list nil (apply sorted-set col-ids) \0 (apply sorted-set col-ids)) 
+              (apply concat (map #(list (get (str %) 0) (set (list %))) col-ids) )
       ) 
   ) 
 ) 
