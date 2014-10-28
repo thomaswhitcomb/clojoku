@@ -7,6 +7,8 @@
                  [org.clojure/clojure "1.6.0"]
                  [ring/ring-core "1.3.0"]
                  [ring/ring-jetty-adapter "1.3.0"]
+                 [compojure "1.1.6"]
+                 [metosin/compojure-api "0.16.2"]
                 ]
   :main ^:skip-aot clojoku.core
   :target-path "target/%s"
