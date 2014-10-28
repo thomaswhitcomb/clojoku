@@ -12,6 +12,8 @@
                 ]
   :main ^:skip-aot clojoku.core
   :target-path "target/%s"
-  :plugins [[lein-ring "0.8.11"]]
-  :ring {:handler clojoku.core/handler}
-  :profiles {:uberjar {:aot :all}})
+  :plugins [[lein-ring "0.8.11"] [lein-beanstalk "0.2.7"]]
+  :ring {:handler clojoku.core/app}
+  :profiles {:uberjar {:aot :all}}
+  :aws {:beanstalk {:region "us-east-1" }}
+)

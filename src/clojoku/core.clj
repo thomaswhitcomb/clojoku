@@ -28,13 +28,18 @@
 
   (GET "/game/:s" [s]
     (if (re-find #"^[0-9]{81}$" s)
-      (send-response http-status-ok (lib/solve s) )
+      (send-response http-status-ok 
+        (let [solution (lib/solve s)] 
+           (if (= "" solution) "No solution" solution)
+        )
+      )
       (send-response http-status-bad-request "Invalid game board" )
     )  
   ) 
   (GET "/health" []
-    (send-response http-status-ok "i am healthy" )
+    (send-response http-status-ok "I am healthy" )
   )
+  (route/not-found "Page Not Found.")
 )
 
 (def app (handler/site casper-routes))
