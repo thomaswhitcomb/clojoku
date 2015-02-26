@@ -15,5 +15,17 @@
   :plugins [[lein-ring "0.8.11"] [lein-beanstalk "0.2.7"]]
   :ring {:handler clojoku.core/app}
   :profiles {:uberjar {:aot :all}}
-  :aws {:beanstalk {:region "us-east-1" }}
+
+  :aws {:beanstalk {:region "us-east-1"
+                    :environments [{:name "development"
+                                    :stack {:name "clojoku-stack"
+                                    :options { "aws:autoscaling:launchconfiguration" {"IamInstanceProfile" "RootInstanceProfile" "SecurityGroups" "BeanstalkSecurityGroup"} "aws:ec2:vpc" {"VpcId" "VPC" "Subnets" "PrivateSubnet"}
+                                      }
+                                    }
+                                    :options {"aws:autoscaling:launchconfiguration"
+                                             {"EC2KeyName" "toms-cap-pre-prod"
+                                              "ImageId" "ami-1a249873"}}}
+                                   ]
+                    }
+        }
 )
