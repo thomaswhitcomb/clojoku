@@ -1,4 +1,4 @@
-(defproject clojoku "0.1.0-SNAPSHOT"
+(defproject clojoku "0.1.0"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -9,6 +9,7 @@
                  [ring/ring-jetty-adapter "1.3.0"]
                  [compojure "1.1.6"]
                  [metosin/compojure-api "0.16.2"]
+                 [com.amazonaws/aws-lambda-java-core "1.0.0"]
                 ]
   :main ^:skip-aot clojoku.core
   :target-path "target/%s"

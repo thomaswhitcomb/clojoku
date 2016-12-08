@@ -1,6 +1,6 @@
 (ns clojoku.core (:gen-class)
-  (:require 
-    [clojoku.lib :as lib  ] 
+  (:require
+    [clojoku.lib :as lib  ]
     [compojure.route :as route]
     [compojure.core :refer [defroutes,GET]]
     [compojure.handler :as handler]
@@ -28,14 +28,14 @@
 
   (GET "/game/:s" [s]
     (if (re-find #"^[0-9]{81}$" s)
-      (send-response http-status-ok 
-        (let [solution (lib/solve s)] 
+      (send-response http-status-ok
+        (let [solution (lib/solve s)]
            (if (= "" solution) "No solution" solution)
         )
       )
       (send-response http-status-bad-request "Invalid game board" )
-    )  
-  ) 
+    )
+  )
   (GET "/health" []
     (send-response http-status-ok "I am healthy" )
   )
