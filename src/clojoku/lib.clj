@@ -1,7 +1,7 @@
 (ns clojoku.lib (:gen-class)
   (:require [ clojoku.data :as data ] )
 )
-(defn string-to-grid [s] 
+(defn string-to-grid [s]
   (
    let [r (range (count s))]
    (zipmap (map #(nth data/cells %) r) (map #(get data/cell-map (get s %)) r))
@@ -11,7 +11,7 @@
 (defn grid-to-string [grid]
   (apply str (map #(let [d (get grid %)] (if (> (count d) 1) d (first d)))  data/cells))
 )
-(defn blah [grid unit] 
+(defn blah [grid unit]
     (if (empty? unit)
       []
       (let [ cell-value (get grid (first unit) #{}) ]
@@ -19,15 +19,15 @@
           (cons cell-value (blah grid (rest unit)))
           (blah grid (rest unit))
         )
-      )  
-    )      
+      )
+    )
 )
 (defn consistent?_ [grid unitlist]
   (loop [ ul unitlist]
     (if (empty? ul)
       true
-      (let [ 
-            unit (first ul) 
+      (let [
+            unit (first ul)
         ;   unified-unit  (map #(get grid % #{}) unit)
         ;   unified-facts (filter #(= (count %) 1) unified-unit)
            unified-facts (blah grid unit)
@@ -36,33 +36,33 @@
           (recur (rest ul))
           false
         )
-      )   
+      )
     )
-  )  
+  )
 )
 
 (defn consistent? [grid]
   (consistent?_ grid data/unitlist)
-)  
+)
 
-(defn solved? [grid] 
-  (let [ 
+(defn solved? [grid]
+  (let [
          values (vals grid)
          list-with-multi-cardinality (drop-while #(= (count %) 1) values)
        ]
     (cond
       (= (count list-with-multi-cardinality) 0) true
       :else false
-    )  
+    )
   )
-)  
-(defn conflict? [grid cell domain] 
+)
+(defn conflict? [grid cell domain]
   (let [ ps (data/peers cell) ]
-    (cond 
+    (cond
       (some #(= (get grid % ) domain) ps) true
       :else  false
     )
-  )  
+  )
 )
 
 (defn count-0 [sequ] (= 0 (count sequ)))
@@ -83,7 +83,7 @@
       )
       :else (reduce-domain grid domain (rest peers))
     )
-  )    
+  )
 )
 
 (defn assign [grid cell domain]
@@ -97,27 +97,29 @@
 
 (defn backtrack-in-domain [unresolved grid cell domain]
   (loop [d domain]
-    (if (empty? d) 
-      {}  
+    (if (empty? d)
+      {}
       (let [ g (backtrack (assign grid cell (first d)) unresolved) ]
              (if (empty? g) (recur (rest d)) g)
       )
-    )  
+    )
   )
-)  
+)
 
 
 (defn backtrack [grid unresolved]
-  (let [ solved (solved? grid) consistent (consistent? grid) ] 
-  (cond 
+  (let [ solved (solved? grid) consistent (consistent? grid) ]
+  (cond
     (and solved consistent) grid
     (count-0 unresolved) {}
-    :else 
-      (if consistent 
-        (let [cell (first unresolved)] (backtrack-in-domain (rest unresolved) grid cell (grid cell)))
-        {} 
+    :else
+      (if consistent
+        (let
+          [cell (first unresolved)]
+          (backtrack-in-domain (rest unresolved) grid cell (grid cell)))
+        {}
       )
-  ))  
+  ))
 )
 
 (defn get-unresolved [grid] (filter #(not= 1 (count (get grid % #{})) ) (keys grid)))
@@ -130,7 +132,7 @@
       (assign (assign-facts grid (rest facts)) cell domain)
     )
   )
-)  
+)
 
 (defn solve [string]
   (let [
