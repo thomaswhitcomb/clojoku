@@ -1,3 +1,5 @@
+https://travis-ci.org/thomaswhitcomb/clojoku.svg?branch=master
+
 # clojoku
 
 ## Overview
