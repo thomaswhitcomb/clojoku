@@ -1,4 +1,4 @@
-https://travis-ci.org/thomaswhitcomb/clojoku.svg?branch=master
+[![Build Status](https://travis-ci.org/thomaswhitcomb/clojoku.svg?branch=master)](https://travis-ci.org/thomaswhitcomb/clojoku)
 
 # clojoku
 
